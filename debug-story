@@ -1,0 +1,24 @@
+1、It's failed when I use "g++ -o test hmac_sha256.cpp -lssl" to compile hmac_sha256.cpp. Warning as below.
+   [codefire@localhost use-hmac]$ g++ -o test hmac_sha256.cpp -lssl
+   /usr/bin/ld: cannot find -lssl
+   collect2: ld returned 1 exit status
+   
+   There is no libssl.so in my lib path? So I try to check it.
+   [codefire@localhost lib]$ ll | grep ssl
+   -rwxr-xr-x  1 root root  420492 Sep 27 08:24 libssl.so.1.0.1e
+   lrwxrwxrwx  1 root root      16 Dec 17 22:01 libssl.so.10 -> libssl.so.1.0.1e
+   -rwxr-xr-x  1 root root  264932 Nov 18 11:16 libssl3.so
+   drwxr-xr-x  3 root root    4096 Sep 27 08:23 openssl
+   
+   Obviously, no libssl.so
+   Then I add a soft link for libssl.so.
+   
+   [root@localhost lib]# ln -s libssl.so.10 libssl.so
+   [root@localhost lib]# ll | grep ssl
+    lrwxrwxrwx  1 root root      12 Jan 21 22:56 libssl.so -> libssl.so.10
+    -rwxr-xr-x  1 root root  420492 Sep 27 08:24 libssl.so.1.0.1e
+    lrwxrwxrwx  1 root root      16 Dec 17 22:01 libssl.so.10 -> libssl.so.1.0.1e
+    -rwxr-xr-x  1 root root  264932 Nov 18 11:16 libssl3.so
+    drwxr-xr-x  3 root root    4096 Sep 27 08:23 openssl
+
+   Compile it again, and it's OK now.
