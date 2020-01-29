@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js" charSet="utf-8"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.2.1/jquery.js"></script>
+</head>
+<body>
+<div>
+    <div style="float: left">stat items:</div>
+    <div id="checkItems" style="float: left"></div>
+</div>
+</body>
+<script>
+    let allKey = ["a", "b", "c"];
+
+    let $statData = [
+        {"date": "2020-01-01 00:00:00", "a": 1000, "b": 1100, "c": 11000},
+        {"date": "2020-01-01 01:00:00", "a": 1001, "b": 1101, "c": 11001},
+        {"date": "2020-01-01 02:00:00", "a": 1002, "b": 1102, "c": 11002},
+        {"date": "2020-01-01 03:00:00", "a": 1003, "b": 1103, "c": 11003},
+        {"date": "2020-01-01 04:00:00", "a": 1004, "b": 1104, "c": 11004},
+        {"date": "2020-01-01 05:00:00", "a": 1005, "b": 1105, "c": 11005},
+        {"date": "2020-01-01 06:00:00", "a": 1006, "b": 1106, "c": 11006},
+        {"date": "2020-01-01 07:00:00", "a": 1007, "b": 1107, "c": 11007},
+        {"date": "2020-01-01 08:00:00", "a": 1008, "b": 1108, "c": 11008},
+        {"date": "2020-01-01 09:00:00", "a": 1009, "b": 1109, "c": 11009},
+        {"date": "2020-01-01 10:00:00", "a": 1010, "b": 1110, "c": 11010},
+        {"date": "2020-01-01 11:00:00", "a": 1011, "b": 1111, "c": 11011},
+        {"date": "2020-01-01 12:00:00", "a": 1012, "b": 1112, "c": 11012},
+        {"date": "2020-01-01 13:00:00", "a": 1013, "b": 1113, "c": 11013},
+        {"date": "2020-01-01 14:00:00", "a": 1014, "b": 1114, "c": 11014},
+        {"date": "2020-01-01 15:00:00", "a": 1015, "b": 1115, "c": 11015},
+        {"date": "2020-01-01 16:00:00", "a": 1016, "b": 1116, "c": 11016},
+        {"date": "2020-01-01 17:00:00", "a": 1017, "b": 1117, "c": 11017},
+        {"date": "2020-01-01 18:00:00", "a": 1018, "b": 1118, "c": 11018},
+        {"date": "2020-01-01 19:00:00", "a": 1019, "b": 1119, "c": 11019},
+        {"date": "2020-01-01 20:00:00", "a": 1020, "b": 1120, "c": 11020},
+        {"date": "2020-01-01 21:00:00", "a": 1021, "b": 1121, "c": 11021},
+        {"date": "2020-01-01 22:00:00", "a": 1022, "b": 1122, "c": 11022},
+        {"date": "2020-01-01 23:00:00", "a": 1023, "b": 1123, "c": 11023},
+        {"date": "2020-01-02 00:00:00", "a": 1000, "b": 1100, "c": 11000},
+        {"date": "2020-01-02 01:00:00", "a": 1001, "b": 1101, "c": 11001},
+        {"date": "2020-01-02 02:00:00", "a": 1002, "b": 1102, "c": 11002},
+        {"date": "2020-01-02 03:00:00", "a": 1003, "b": 1103, "c": 11003},
+        {"date": "2020-01-02 04:00:00", "a": 1004, "b": 1104, "c": 11004},
+        {"date": "2020-01-02 05:00:00", "a": 1005, "b": 1105, "c": 11005},
+        {"date": "2020-01-02 06:00:00", "a": 1006, "b": 1106, "c": 11006},
+        {"date": "2020-01-02 07:00:00", "a": 1007, "b": 1107, "c": 11007},
+        {"date": "2020-01-02 08:00:00", "a": 1008, "b": 1108, "c": 11008},
+        {"date": "2020-01-02 09:00:00", "a": 1009, "b": 1109, "c": 11009},
+        {"date": "2020-01-02 10:00:00", "a": 1010, "b": 1110, "c": 11010},
+        {"date": "2020-01-02 11:00:00", "a": 1011, "b": 1111, "c": 11011},
+        {"date": "2020-01-02 12:00:00", "a": 1012, "b": 1112, "c": 11012},
+        {"date": "2020-01-02 13:00:00", "a": 1013, "b": 1113, "c": 11013},
+        {"date": "2020-01-02 14:00:00", "a": 1014, "b": 1114, "c": 11014},
+        {"date": "2020-01-02 15:00:00", "a": 1015, "b": 1115, "c": 11015},
+        {"date": "2020-01-02 16:00:00", "a": 1016, "b": 1116, "c": 11016},
+        {"date": "2020-01-02 17:00:00", "a": 1017, "b": 1117, "c": 11017},
+        {"date": "2020-01-02 18:00:00", "a": 1018, "b": 1118, "c": 11018},
+        {"date": "2020-01-02 19:00:00", "a": 1019, "b": 1119, "c": 11019},
+        {"date": "2020-01-02 20:00:00", "a": 1020, "b": 1120, "c": 11020},
+        {"date": "2020-01-02 21:00:00", "a": 1021, "b": 1121, "c": 11021},
+        {"date": "2020-01-02 22:00:00", "a": 1022, "b": 1122, "c": 11022},
+        {"date": "2020-01-02 23:00:00", "a": 1023, "b": 1123, "c": 11023}
+    ];
+
+    function draw(data, columns, context) {
+        // let zoom = d3.zoom();
+
+        let series = columns.map(key => data.map(({[key]: value, date}) => ({key, date, value})));
+
+        let margin = ({
+            top: 30,
+            right: 150,
+            bottom: 30,
+            left: 150
+        });
+
+        let height = 200;
+        let width = 900;
+
+        let firstDate = new Date(data[0].date);
+        let lastDate = new Date(data[data.length - 1].date);
+
+        let x = d3.scaleTime().domain([firstDate, lastDate]).range([margin.left, width - margin.right]);
+
+        let y = d3.scaleLinear()
+            .domain([d3.min(series, s => d3.min(s, d => d.value)), d3.max(series, s => d3.max(s, d => d.value))])
+            .range([height - margin.bottom, margin.top]).nice();
+
+        let z = d3.scaleOrdinal(columns, d3.schemeCategory10);
+
+        let div = document.createElement("div");
+        div.id = context;
+        document.getElementsByTagName("body").item(0).appendChild(div);
+
+        // select div to draw
+        let svg = d3.select("#" + context)
+            .append("svg")
+            .attr("viewBox", [0, 0, width, height]);
+        // .call(zoom.on("zoom", function () {
+        //     svg.attr("transform", d3.event.transform)
+        // }));
+
+        let xAxis = g => g.attr("transform", `translate(0, ${height - margin.bottom})`)
+            .call(d3.axisBottom(x).ticks(data.length).tickFormat(d3.timeFormat("%Y.%m.%d:%H")));
+
+        let yAxis = g => g.call(d3.axisLeft(y)).attr("transform", `translate(${margin.left},0)`);
+
+        // draw x axis
+        svg.append("g")
+            .call(xAxis)
+            .selectAll("text")
+            .style("font-size", "5px")
+            .style("text-anchor", "start")
+            .attr("transform", "rotate(25 -5 10)");
+
+        // draw y axis
+        svg.append("g")
+            .call(yAxis)
+            .selectAll("text")
+            .style("font-size", "5px");
+
+        const serie = svg.append("g").selectAll("g").data(series).join("g");
+
+        serie.append("path")
+            .attr("fill", "none")
+            .attr("stroke", d => z(d[0].key))
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line().x(d => x(new Date(d.date))).y(d => y(d.value)));
+
+        serie.append("g")
+            .selectAll("circle")
+            .data(d => d)
+            .join("circle")
+            .attr("stroke", "black")
+            .attr("r", "0.6")
+            .attr("cx", d => x(new Date(d.date)))
+            .attr("cy", d => y(d.value));
+
+        serie.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("stroke-linecap", "round")
+            .attr("stroke-linejoin", "round")
+            .attr("text-anchor", "middle")
+            .selectAll("text")
+            .data(d => d)
+            .join("text")
+            .text(d => d.value)
+            .attr("dy", "0.35em")
+            .attr("x", d => x(new Date(d.date)))
+            .attr("y", d => y(d.value))
+            .attr("opacity", "0")
+            .on('mouseover',
+                function (d, i) {
+                    d3.select(this).transition().duration('50').attr('opacity', '1');
+                })
+            .on('mouseout',
+                function (d, i) {
+                    d3.select(this).transition().duration('50').attr('opacity', '0');
+                });
+
+        let textDiv = document.createElement("div");
+        textDiv.innerText = context;
+        textDiv.style = "solid red;text-align:center;font-size:30px;";
+        document.getElementById(context).appendChild(textDiv);
+
+        let blankDiv = document.createElement("div");
+        blankDiv.style = "border:1px solid #ccc;";
+        document.getElementById(context).appendChild(blankDiv);
+    }
+
+    function mainProcess() {
+        ["all"].concat(allKey.sort()).forEach((key, index, array) => {
+            let checkBox = document.createElement("input");
+            checkBox.setAttribute("type", "checkbox");
+            checkBox.setAttribute("value", key);
+            checkBox.setAttribute("name", key);
+
+            let div = document.createElement("div");
+            div.setAttribute("style", "float: left");
+            div.appendChild(checkBox);
+
+            let textDiv = document.createElement("div");
+            textDiv.setAttribute("style", "float: left");
+            textDiv.innerText = key;
+
+            document.getElementById("checkItems").appendChild(div);
+            document.getElementById("checkItems").appendChild(textDiv);
+        });
+
+        $("input[type='checkbox']").change(function () {
+            if ($(this).val() === "all") {
+                $("input[type='checkbox']").each(function () {
+                    if ($(this).val() !== "all") {
+                        $(this).prop("checked",false);
+                        $(this).prop("disabled", false);
+                        $("#" + $(this).val()).remove();
+                    }
+                });
+                if (this.checked) {
+                    $("input[type='checkbox']").each(function () {
+                        if ($(this).val() !== "all") {
+                            $(this).prop("checked",true);
+                            $(this).prop("disabled", true);
+                            draw($statData, [$(this).val()], $(this).val());
+                        }
+                    });
+                }
+            } else {
+                if (this.checked) {
+                    draw($statData, [$(this).val()], $(this).val());
+                } else {
+                    $("#" + $(this).val()).remove();
+                }
+            }
+        });
+    }
+
+    mainProcess();
+</script>
+
+</html>
